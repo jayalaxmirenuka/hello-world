@@ -1,0 +1,47 @@
+pipeline{
+    
+    agent any
+    
+    stages{
+        
+        stage('Checkout') {
+            steps {
+                git  “https://github.com/jayalaxmirenuka/hello-world.git”//
+            }
+        }
+        
+        stage ('build stage'){
+            
+            steps{
+                
+                bat 'mvn clean package'
+            }
+            
+            
+        }
+        stage ('test'){
+            steps{
+                 bat 'mvn test'
+            }
+           
+        }
+        /*stage('Verify JAR') {
+            steps {
+                script {
+                    // List files in the target directory to verify the JAR file is there
+                    bat 'ls target/'
+                }
+            }
+        }*/
+        
+        stage('deploy'){
+            steps{
+                bat 'java -jar target/helloworld-1.jar'
+            }
+            
+        }
+        
+    }
+    
+    
+}
